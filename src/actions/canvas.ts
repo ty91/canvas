@@ -2,6 +2,7 @@
 
 import { nanoid } from "nanoid";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 import { db } from "@/db";
 import { canvases } from "@/db/schema";
 
@@ -13,5 +14,6 @@ export async function createCanvas() {
     title: "Untitled Canvas",
   });
 
+  revalidatePath("/");
   redirect(`/canvas/${id}`);
 }
