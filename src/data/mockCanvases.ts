@@ -25,6 +25,7 @@ export const mockCanvases: Canvas[] = [
   {
     id: "4",
     title: "Architecture Diagram",
+    description: null,
     createdAt: new Date("2024-10-10"),
     updatedAt: new Date("2024-12-10"),
   },

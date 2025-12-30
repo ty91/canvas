@@ -1,21 +1,21 @@
 import { Header } from "@/components/layout/Header";
 import { CanvasGrid } from "@/components/canvas/CanvasGrid";
-import { mockCanvases } from "@/data/mockCanvases";
+import { NewCanvasButton } from "@/components/canvas/NewCanvasButton";
+import { db } from "@/db";
+import { canvases } from "@/db/schema";
+import { desc } from "drizzle-orm";
 
-export default function Home() {
+export default async function Home() {
+  const allCanvases = await db.query.canvases.findMany({
+    orderBy: [desc(canvases.updatedAt)],
+  });
+
   return (
     <div className="min-h-screen bg-white">
       <main className="mx-auto max-w-7xl px-6 py-12">
-        <Header
-          title="Canvases"
-          action={
-            <button className="border border-neutral-900 px-4 py-2 text-sm font-medium text-neutral-900 transition-colors hover:bg-neutral-900 hover:text-white">
-              New Canvas
-            </button>
-          }
-        />
+        <Header title="Canvases" action={<NewCanvasButton />} />
         <section className="mt-8">
-          <CanvasGrid canvases={mockCanvases} />
+          <CanvasGrid canvases={allCanvases} />
         </section>
       </main>
     </div>
